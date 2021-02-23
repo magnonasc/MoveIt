@@ -56,7 +56,17 @@ export default createGlobalStyle`
         background-color: ${(props) => props.theme.colors.background};
     }
 
-    h1, h2, h3, h4, h5, h6, p, span {
+    h1, h2, h3, h4, h5, h6 {
+        color: ${(props) => props.theme.colors.title};
+    }
+
+    p, span {
         color: ${(props) => props.theme.colors.text};
+    }
+
+    body, input, textarea, button {
+        font-weight: 400;
+        font-size: 16px;
+        font-family: 'Inter', sans-serif;
     }
 `;
