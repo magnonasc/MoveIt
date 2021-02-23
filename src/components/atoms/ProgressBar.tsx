@@ -27,9 +27,19 @@ const ProgressBarValue = styled.div<ProgressBarProps>`
     border-radius: 2px;
 `;
 
+const CurrentProgress = styled.span`
+    position: absolute;
+    top: 12px;
+    right: 0;
+    transform: translateX(50%);
+    white-space: pre;
+`;
+
 const ProgressBar: FC<ProgressBarProps> = ({ max, value }: ProgressBarProps) => (
     <ProgressBarContainer>
-        <ProgressBarValue max={max} value={value} />
+        <ProgressBarValue max={max} value={value}>
+            {value > 0 && value < max ? <CurrentProgress>{value} xp</CurrentProgress> : null}
+        </ProgressBarValue>
     </ProgressBarContainer>
 );
 
