@@ -5,6 +5,7 @@ const PageContainer = styled.div`
     margin: auto;
     display: flex;
     flex-direction: column;
+    height: 100vh;
 `;
 
 export default PageContainer;
