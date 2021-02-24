@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-export type ProgressBarProps = HTMLAttributes<HTMLDivElement> & {
+export type ExperienceBarProps = HTMLAttributes<HTMLDivElement> & {
     max: number;
     value: number;
 };
@@ -28,7 +28,7 @@ const ProgressBarContainer = styled.div`
     border-radius: 2px;
 `;
 
-const ProgressBarValue = styled.div<ProgressBarProps>`
+const ProgressBarValue = styled.div<ExperienceBarProps>`
     position: absolute;
     left: 0;
     height: 100%;
@@ -46,7 +46,7 @@ const CurrentProgress = styled.span`
     white-space: pre;
 `;
 
-const ExperienceBar: FC<ProgressBarProps> = ({ max, value }: ProgressBarProps) => (
+const ExperienceBar: FC<ExperienceBarProps> = ({ max, value }: ExperienceBarProps) => (
     <Container>
         <LabelContainer>0 xp</LabelContainer>
         <ProgressBarContainer>
