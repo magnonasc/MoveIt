@@ -60,12 +60,16 @@ export default createGlobalStyle`
         color: ${(props) => props.theme.colors.title};
     }
 
-    p, span {
+    h1, h2, h3, h4, h5, h6, strong {
+        font-weight: 400;
+    }
+
+    p, span, strong, em {
         color: ${(props) => props.theme.colors.text};
     }
 
     body, input, textarea, button {
-        font-weight: 400;
+        font-weight: 300;
         font-size: 16px;
         font-family: 'Inter', sans-serif;
     }

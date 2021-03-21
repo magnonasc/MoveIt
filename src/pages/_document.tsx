@@ -20,7 +20,7 @@ class MyDocument extends Document {
                         {initialProps.styles}
                         {sheet.getStyleElement()}
                     </>
-                ),
+                )
             };
         } finally {
             sheet.seal();
