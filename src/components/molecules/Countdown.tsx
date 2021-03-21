@@ -55,13 +55,18 @@ const LastUnitContainer = styled.span`
     border-left: solid 1px ${({ theme }) => theme.colors.grayLine};
 `;
 
+const FinishedCicleButton = styled(Button)`
+    border-bottom: solid 4px ${({ theme }) => theme.colors.green};
+`;
+
 const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
-    const currentLevelInitialTime = 25 * 60;
+    const currentLevelInitialTime = 3;
 
     const interval = useRef(null);
 
-    const [active, setActive] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const [time, setTime] = useState(currentLevelInitialTime);
+    const [hasFinished, setHasFinished] = useState(false);
 
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -70,8 +75,8 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
     const [firstSecondUnit, lastSecondUnit] = String(seconds).padStart(2, '0').split('');
 
     const handleCountdown = () => {
-        setActive((previousIsActive) => {
-            if (previousIsActive === true) {
+        setIsActive((previousIsActive) => {
+            if (previousIsActive) {
                 setTime(currentLevelInitialTime);
             }
 
@@ -80,21 +85,29 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
     };
 
     useEffect(() => {
-        if (active) {
+        if (isActive) {
             interval.current = setInterval(() => {
                 setTime((previousTime) => {
                     if (previousTime > 0) {
                         return previousTime - 1;
                     }
 
-                    setActive(false);
+                    setIsActive(false);
+                    setHasFinished(true);
                     return previousTime;
                 });
             }, 1000);
         } else {
             clearInterval(interval.current);
         }
-    }, [active]);
+    }, [isActive]);
+
+    useEffect(() => {
+        if (hasFinished) {
+            console.log('ACABAMO!');
+            // TODO mostrar mensagem de sucesso!
+        }
+    }, [hasFinished]);
 
     return (
         <CountdownContainer>
@@ -109,14 +122,20 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
                     <LastUnitContainer>{lastSecondUnit}</LastUnitContainer>
                 </CountSegmentContainer>
             </CountdownDisplay>
-            <Button
-                onClick={handleCountdown}
-                // icon={active ? 'stop-arrow' : 'play-arrow'}
-                backgroundColor={active ? 'white' : 'lightBlue'}
-                hoverBackgroundColor={active ? 'red' : 'darkBlue'}
-            >
-                {active ? 'Abandone o ciclo' : 'Inicie o ciclo'}
-            </Button>
+            {hasFinished ? (
+                <FinishedCicleButton backgroundColor="white" disabled>
+                    Ciclo Encerrado
+                </FinishedCicleButton>
+            ) : (
+                <Button
+                    onClick={handleCountdown}
+                    // icon={active ? 'stop-arrow' : 'play-arrow'}
+                    backgroundColor={isActive ? 'white' : 'lightBlue'}
+                    hoverBackgroundColor={isActive ? 'red' : 'darkBlue'}
+                >
+                    {isActive ? 'Abandonar o ciclo' : 'Iniciar um ciclo'}
+                </Button>
+            )}
         </CountdownContainer>
     );
 };

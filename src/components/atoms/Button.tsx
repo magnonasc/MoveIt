@@ -1,7 +1,7 @@
-import { FC, HTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, FC } from 'react';
 import styled from 'styled-components';
 
-type ButtonWithIconProps = HTMLAttributes<HTMLButtonElement> & {
+type ButtonWithIconProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     icon?: string;
     backgroundColor: string;
     hoverBackgroundColor: string;
@@ -25,6 +25,16 @@ const ButtonContainer = styled.button<ButtonWithIconProps>`
         color: ${({ hoverBackgroundColor, theme }) =>
             hoverBackgroundColor === 'white' ? theme.colors.text : theme.colors.white};
     }
+
+    &:disabled {
+        cursor: not-allowed;
+
+        &:hover {
+            background-color: ${({ backgroundColor, theme }) => theme.colors[backgroundColor]};
+            color: ${({ backgroundColor, theme }) =>
+                backgroundColor === 'white' ? theme.colors.text : theme.colors.white};
+        }
+    }
 `;
 
 // const ButtonIcon = styled.img`
@@ -33,7 +43,7 @@ const ButtonContainer = styled.button<ButtonWithIconProps>`
 //     margin: 0 1rem;
 // `;
 
-const Button: FC<ButtonWithIconProps> = ({ children, icon, ...props }) => {
+const Button: FC<ButtonWithIconProps> = ({ children, ...props }) => {
     return (
         <ButtonContainer type="button" {...props}>
             {children}
