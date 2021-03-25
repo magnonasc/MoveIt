@@ -1,5 +1,6 @@
-import { FC, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
+import { ChallengesContext } from '../../contexts/ChallengeContext';
 
 const ProfileContainer = styled.section`
     display: flex;
@@ -42,6 +43,8 @@ const CurrentLevelText = styled.p`
 `;
 
 const Profile: FC<HTMLAttributes<HTMLElement>> = () => {
+    const { currentLevel } = useContext(ChallengesContext);
+
     return (
         <ProfileContainer>
             <ProfileImage
@@ -52,7 +55,7 @@ const Profile: FC<HTMLAttributes<HTMLElement>> = () => {
                 <UserName>Magno Nascimento</UserName>
                 <CurrentLevelContainer>
                     <ProgressLevelIcon src="/assets/icons/up.svg" alt="green arrow up" />
-                    <CurrentLevelText>Level 1</CurrentLevelText>
+                    <CurrentLevelText>Level {currentLevel}</CurrentLevelText>
                 </CurrentLevelContainer>
             </ProfileInformation>
         </ProfileContainer>

@@ -5,8 +5,10 @@ const theme = {
         text: '#666666',
         lightBlue: '#5965E0',
         darkBlue: '#4953B8',
-        green: '#4CD62B',
-        red: '#E83F5B',
+        lightGreen: '#4CD62B',
+        darkGreen: '#43bd26',
+        lightRed: '#E83F5B',
+        darkRed: '#D13852',
         blueText: '#B2B9FF',
         grayLine: '#DCDDE0',
         white: '#FFFFFF'

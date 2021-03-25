@@ -68,9 +68,24 @@ export default createGlobalStyle`
         color: ${(props) => props.theme.colors.text};
     }
 
+    html {
+        font-size: 16px;
+
+        @media (max-width: 768px) {
+            font-size: 14px;
+        }
+
+        @media (max-width: 425px) {
+            font-size: 12px;
+        }
+
+        @media (max-width: 368px) {
+            font-size: 10px;
+        }
+    }
+
     body, input, textarea, button {
         font-weight: 300;
-        font-size: 16px;
         font-family: 'Inter', sans-serif;
     }
 `;

@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '../styles/global';
 import theme from '../styles/theme';
+import { ChallengesContextProvider } from '../contexts/ChallengeContext';
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
     return (
@@ -26,7 +27,9 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
 
             <ThemeProvider theme={theme}>
                 <GlobalStyle />
-                <Component {...pageProps} />
+                <ChallengesContextProvider>
+                    <Component {...pageProps} />
+                </ChallengesContextProvider>
             </ThemeProvider>
         </>
     );

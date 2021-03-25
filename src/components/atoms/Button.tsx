@@ -4,7 +4,7 @@ import styled from 'styled-components';
 type ButtonWithIconProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     icon?: string;
     backgroundColor: string;
-    hoverBackgroundColor: string;
+    hoverBackgroundColor?: string;
 };
 
 const ButtonContainer = styled.button<ButtonWithIconProps>`

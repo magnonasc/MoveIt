@@ -1,7 +1,8 @@
-import { FC, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
+import { ChallengesContext } from '../../contexts/ChallengeContext';
 
-export type ExperienceBarProps = HTMLAttributes<HTMLDivElement> & {
+export type ProgressBarProps = HTMLAttributes<HTMLDivElement> & {
     max: number;
     value: number;
 };
@@ -28,13 +29,13 @@ const ProgressBarContainer = styled.div`
     border-radius: 2px;
 `;
 
-const ProgressBarValue = styled.div<ExperienceBarProps>`
+const ProgressBarValue = styled.div<ProgressBarProps>`
     position: absolute;
     left: 0;
     height: 100%;
     width: ${({ max, value }) => (value * 100) / max}%;
     max-width: 100%;
-    background-color: ${({ theme }) => theme.colors.green};
+    background-color: ${({ theme }) => theme.colors.lightGreen};
     border-radius: 2px;
 `;
 
@@ -46,16 +47,20 @@ const CurrentProgress = styled.span`
     white-space: pre;
 `;
 
-const ExperienceBar: FC<ExperienceBarProps> = ({ max, value }: ExperienceBarProps) => (
-    <Container>
-        <LabelContainer>0 xp</LabelContainer>
-        <ProgressBarContainer>
-            <ProgressBarValue max={max} value={value}>
-                {value > 0 && value < max ? <CurrentProgress>{value} xp</CurrentProgress> : null}
-            </ProgressBarValue>
-        </ProgressBarContainer>
-        <LabelContainer>{max} xp</LabelContainer>
-    </Container>
-);
+const ExperienceBar: FC<HTMLAttributes<HTMLDivElement>> = () => {
+    const { currentExperience, currentLevelMaxExperience } = useContext(ChallengesContext);
+
+    return (
+        <Container>
+            <LabelContainer>{currentExperience} xp</LabelContainer>
+            <ProgressBarContainer>
+                <ProgressBarValue max={currentLevelMaxExperience} value={currentExperience}>
+                    <CurrentProgress>{currentExperience} xp</CurrentProgress>
+                </ProgressBarValue>
+            </ProgressBarContainer>
+            <LabelContainer>{currentLevelMaxExperience} xp</LabelContainer>
+        </Container>
+    );
+};
 
 export default ExperienceBar;

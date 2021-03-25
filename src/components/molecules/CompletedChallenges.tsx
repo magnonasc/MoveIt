@@ -1,5 +1,6 @@
-import { FC, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
+import { ChallengesContext } from '../../contexts/ChallengeContext';
 
 const CompletedChallengesContainer = styled.section`
     display: flex;
@@ -19,10 +20,12 @@ const CompletedChallengesAmount = styled.strong`
 `;
 
 const CompletedChallenges: FC<HTMLAttributes<HTMLElement>> = () => {
+    const { challengesCompleted } = useContext(ChallengesContext);
+
     return (
         <CompletedChallengesContainer>
             <CompletedChallengesText>Completed Challenges</CompletedChallengesText>
-            <CompletedChallengesAmount>00</CompletedChallengesAmount>
+            <CompletedChallengesAmount>{challengesCompleted}</CompletedChallengesAmount>
         </CompletedChallengesContainer>
     );
 };

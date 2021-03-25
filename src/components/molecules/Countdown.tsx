@@ -1,6 +1,9 @@
-import { FC, HTMLAttributes, useState, useEffect, useRef } from 'react';
+import { FC, HTMLAttributes, useState, useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
+import { ChallengesContext } from '../../contexts/ChallengeContext';
 import Button from '../atoms/Button';
+
+const DEFAULT_INITIAL_TIME = 10; // 60 * 25;
 
 const CountdownContainer = styled.section`
     display: flex;
@@ -56,17 +59,16 @@ const LastUnitContainer = styled.span`
 `;
 
 const FinishedCicleButton = styled(Button)`
-    border-bottom: solid 4px ${({ theme }) => theme.colors.green};
+    border-bottom: solid 4px ${({ theme }) => theme.colors.lightGreen};
 `;
 
 const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
-    const currentLevelInitialTime = 3;
+    const { startNewChallenge, hasFinishedCountdown, finishCountdown } = useContext(ChallengesContext);
 
     const interval = useRef(null);
 
     const [isActive, setIsActive] = useState(false);
-    const [time, setTime] = useState(currentLevelInitialTime);
-    const [hasFinished, setHasFinished] = useState(false);
+    const [time, setTime] = useState(DEFAULT_INITIAL_TIME);
 
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -75,13 +77,7 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
     const [firstSecondUnit, lastSecondUnit] = String(seconds).padStart(2, '0').split('');
 
     const handleCountdown = () => {
-        setIsActive((previousIsActive) => {
-            if (previousIsActive) {
-                setTime(currentLevelInitialTime);
-            }
-
-            return !previousIsActive;
-        });
+        setIsActive((previousIsActive) => !previousIsActive);
     };
 
     useEffect(() => {
@@ -93,7 +89,7 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
                     }
 
                     setIsActive(false);
-                    setHasFinished(true);
+                    finishCountdown();
                     return previousTime;
                 });
             }, 1000);
@@ -103,11 +99,12 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
     }, [isActive]);
 
     useEffect(() => {
-        if (hasFinished) {
-            console.log('ACABAMO!');
-            // TODO mostrar mensagem de sucesso!
+        if (!hasFinishedCountdown) {
+            setTime(DEFAULT_INITIAL_TIME);
+        } else {
+            startNewChallenge();
         }
-    }, [hasFinished]);
+    }, [hasFinishedCountdown]);
 
     return (
         <CountdownContainer>
@@ -122,7 +119,7 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
                     <LastUnitContainer>{lastSecondUnit}</LastUnitContainer>
                 </CountSegmentContainer>
             </CountdownDisplay>
-            {hasFinished ? (
+            {hasFinishedCountdown ? (
                 <FinishedCicleButton backgroundColor="white" disabled>
                     Ciclo Encerrado
                 </FinishedCicleButton>
@@ -131,7 +128,7 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
                     onClick={handleCountdown}
                     // icon={active ? 'stop-arrow' : 'play-arrow'}
                     backgroundColor={isActive ? 'white' : 'lightBlue'}
-                    hoverBackgroundColor={isActive ? 'red' : 'darkBlue'}
+                    hoverBackgroundColor={isActive ? 'lightRed' : 'darkBlue'}
                 >
                     {isActive ? 'Abandonar o ciclo' : 'Iniciar um ciclo'}
                 </Button>

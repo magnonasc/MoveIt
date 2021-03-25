@@ -1,0 +1,32 @@
+[
+    {
+        "icon": "body",
+        "description": "Estique um de seus braços com a palma da mão virada para a frente e puxe os dedos para cima por 3 minutos.",
+        "experienceGain": 80
+    },
+    {
+        "icon": "body",
+        "description": "Estique seu braço contra o peito e puxe-o utilizando o outro braço por 10 segundos por braço por 3 minutos.",
+        "experienceGain": 60
+    },
+    {
+        "icon": "body",
+        "description": "Puxe seu pescoço com a ajuda da mão para a direita a para a esquerda, permanecendo na posição por 1 minuto para cada lado.",
+        "experienceGain": 70
+    },
+    {
+        "icon": "eye",
+        "description": "Em algum ambiente aberto, olhe o mais longe que puder em quatro direções por 3s, mexa apenas os olhos.",
+        "experienceGain": 60
+    },
+    {
+        "icon": "eye",
+        "description": "Usando os polegares, massageie a área abaixo das sobrancelhas em movimentos circulares por 15 segundos.",
+        "experienceGain": 100
+    },
+    {
+        "icon": "eye",
+        "description": "Sentado, feche os olhos e cubra-os com as palmas da mão durante 2 minnutos, depois abra normalmente.",
+        "experienceGain": 80
+    }
+]

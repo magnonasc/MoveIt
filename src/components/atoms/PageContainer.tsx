@@ -5,7 +5,10 @@ const PageContainer = styled.div`
     margin: auto;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+
+    @media (min-width: 1024px) {
+        height: 100vh;
+    }
 `;
 
 export default PageContainer;
