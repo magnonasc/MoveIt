@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ChallengesContext } from '../../contexts/ChallengeContext';
 import Button from '../atoms/Button';
 
-const DEFAULT_INITIAL_TIME = 10; // 60 * 25;
+const DEFAULT_INITIAL_TIME = 60 * 25;
 
 const CountdownContainer = styled.section`
     display: flex;
@@ -70,11 +70,25 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
     const [isActive, setIsActive] = useState(false);
     const [time, setTime] = useState(DEFAULT_INITIAL_TIME);
 
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
+    const [firstMinuteUnit, setFirstMinuteUnit] = useState('0');
+    const [lastMinuteUnit, setLastMinuteUnit] = useState('0');
 
-    const [firstMinuteUnit, lastMinuteUnit] = String(minutes).padStart(2, '0').split('');
-    const [firstSecondUnit, lastSecondUnit] = String(seconds).padStart(2, '0').split('');
+    const [firstSecondUnit, setFirstSecondUnit] = useState('0');
+    const [lastSecondUnit, setLastSecondUnit] = useState('0');
+
+    useEffect(() => {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+
+        const minuteUnits = String(minutes).padStart(2, '0').split('');
+        const secondUnits = String(seconds).padStart(2, '0').split('');
+
+        setFirstMinuteUnit(minuteUnits[0]);
+        setLastMinuteUnit(minuteUnits[1]);
+
+        setFirstSecondUnit(secondUnits[0]);
+        setLastSecondUnit(secondUnits[1]);
+    }, [time]);
 
     const handleCountdown = () => {
         setIsActive((previousIsActive) => !previousIsActive);
@@ -88,8 +102,6 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
                         return previousTime - 1;
                     }
 
-                    setIsActive(false);
-                    finishCountdown();
                     return previousTime;
                 });
             }, 1000);
@@ -97,6 +109,13 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
             clearInterval(interval.current);
         }
     }, [isActive]);
+
+    useEffect(() => {
+        if (time === 0) {
+            setIsActive(false);
+            finishCountdown();
+        }
+    }, [time]);
 
     useEffect(() => {
         if (!hasFinishedCountdown) {
