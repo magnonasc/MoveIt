@@ -107,6 +107,7 @@ const Countdown: FC<HTMLAttributes<HTMLElement>> = () => {
             }, 1000);
         } else {
             clearInterval(interval.current);
+            setTime(DEFAULT_INITIAL_TIME);
         }
     }, [isActive]);
 
